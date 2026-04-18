@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test"
-import { createSvgUrl } from "lib"
+import { createPngUrl, createSvgUrl } from "lib"
 import { gunzipSync, strFromU8 } from "fflate"
 
 test("create pcb svg url", () => {
@@ -81,6 +81,25 @@ export default () => (
   expect(parsed.searchParams.get("png_width")).toBe("800")
   expect(parsed.searchParams.get("png_height")).toBe("600")
   expect(parsed.searchParams.get("png_density")).toBe("2")
+  expect(parsed.searchParams.get("code")).not.toBeNull()
+})
+
+test("create png url uses svg.tscircuit.com", () => {
+  const url = createPngUrl(
+    `
+export default () => (
+  <board width="10mm" height="10mm">
+    <resistor resistance="1k" footprint="0402" name="R1" schX={3} pcbX={3} />
+  </board>
+)
+`,
+    "pcb",
+  )
+
+  const parsed = new URL(url)
+  expect(parsed.origin).toBe("https://svg.tscircuit.com")
+  expect(parsed.searchParams.get("svg_type")).toBe("pcb")
+  expect(parsed.searchParams.get("format")).toBe("png")
   expect(parsed.searchParams.get("code")).not.toBeNull()
 })
 

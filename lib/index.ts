@@ -96,8 +96,7 @@ export function createPngUrl(
   tscircuitCode: string,
   view: "pcb" | "schematic" | "3d",
 ) {
-  const base64Data = getCompressedBase64SnippetString(tscircuitCode)
-  return `https://png.tscircuit.com/?view=${view}&code=${encodeURIComponent(base64Data)}`
+  return createSvgUrl(tscircuitCode, view, { format: "png" })
 }
 
 export function createSnippetUrl(text: string, snippet_type?: string): string {

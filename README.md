@@ -71,3 +71,22 @@ const svgUrl = createSvgUrl(
 
 // Returns a png URL that renders the provided fsMap on svg.tscircuit.com
 ```
+
+### PNG URLs
+
+```ts
+import { createPngUrl } from "@tscircuit/create-snippet-url"
+
+const pngUrl = createPngUrl(
+  `
+export default () => (
+  <board width="10mm" height="10mm">
+    <resistor resistance="1k" footprint="0402" name="R1" schX={3} pcbX={3} />
+  </board>
+)
+`,
+  "pcb",
+)
+
+// Returns a png URL rendered by https://svg.tscircuit.com
+```
